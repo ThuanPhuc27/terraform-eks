@@ -37,6 +37,17 @@ variable "vpc" {
     one_nat_gateway_per_az = false
   }
 }
+
+variable "eks" {
+  description = "EKS cluster configuration"
+  type = object({
+    cluster_version = string
+  })
+  default = {
+    cluster_version = "1.33"
+  }
+}
+
 data "aws_ecrpublic_authorization_token" "token" {
   provider = aws.virginia
 }

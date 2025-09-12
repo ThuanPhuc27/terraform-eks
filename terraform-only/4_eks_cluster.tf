@@ -3,7 +3,7 @@ module "eks" {
   version = "20.24.0"
 
   cluster_name    = "${var.project}-${var.environment}"
-  cluster_version = "1.33"
+  cluster_version = "${var.eks.cluster_version}"
 
   cluster_endpoint_public_access = true
   enable_cluster_creator_admin_permissions = true
@@ -34,6 +34,7 @@ module "eks" {
   node_security_group_tags = {
     "karpenter.sh/discovery" = "${var.project}-${var.environment}"
   }
+
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 

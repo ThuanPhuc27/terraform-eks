@@ -1,5 +1,5 @@
 resource "aws_iam_role" "eks-alb-ingress-controller" {
-  name = "eks-alb-ingress-controller"
+  name = "${var.project}-${var.environment}-eks-alb-ingress-controller"
   assume_role_policy = data.aws_iam_policy_document.alb_controller_assume_role_policy.json  
 }
 
