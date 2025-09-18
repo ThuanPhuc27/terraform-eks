@@ -85,7 +85,7 @@ resource "kubectl_manifest" "karpenter_node_class" {
     apiVersion: karpenter.k8s.aws/v1
     kind: EC2NodeClass
     metadata:
-      name: default
+      name: spot-nodeclass
     spec:
       amiFamily: AL2023
       amiSelectorTerms:

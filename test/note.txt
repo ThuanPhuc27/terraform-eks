@@ -1,0 +1,37 @@
+================== karpenter
+
+kubectl logs -f deployment/karpenter -n kube-system
+
+
+
+================ aws 
+
+aws eks update-kubeconfig --region ap-southeast-1 --name tool-cluster-dev
+
+
+
+
+================ vpc-cni 
+
+kubectl set env daemonset aws-node -n kube-system ENABLE_PREFIX_DELEGATION=true
+
+kubectl set env ds aws-node -n kube-system WARM_PREFIX_TARGET=1
+
+kubectl set env ds aws-node -n kube-system WARM_IP_TARGET=5
+
+kubectl set env ds aws-node -n kube-system MINIMUM_IP_TARGET=5
+
+================ ebs-csi
+
+kubectl logs -f deployment/ebs-csi-controller -n kube-system
+
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: gp3-waitforfirstcustomer
+provisioner: ebs.csi.aws.com
+volumeBindingMode: WaitForFirstConsumer
+parameters:
+  type: gp3
+  encrypted: "true"
+allowVolumeExpansion: true

@@ -1,0 +1,18 @@
+global:
+  edition: ce
+  hosts:
+    domain: lptdevops.com
+certmanager-issuer:
+  email: thuanlephuc152@gmail.com
+nginx-ingress:
+  enabled: false
+prometheus:
+  install: true
+redis:
+  install: true
+postgresql:
+  install: true
+gitlab-runner:
+  install: true
+registry:
+  enable: true

@@ -37,3 +37,23 @@ data "aws_iam_policy_document" "ebs_controller_assume_role_policy" {
     }
   }
 }
+
+
+resource "kubectl_manifest" "gp3-storageclass" {
+  yaml_body = <<-YAML
+    apiVersion: storage.k8s.io/v1
+    kind: StorageClass
+    metadata:
+      name: gp3-waitforfirstcustomer
+    provisioner: ebs.csi.aws.com
+    volumeBindingMode: WaitForFirstConsumer
+    parameters:
+      type: gp3
+      encrypted: "true"
+    allowVolumeExpansion: true    
+  YAML
+
+  depends_on = [
+    aws_eks_addon.ebs
+  ]
+}
