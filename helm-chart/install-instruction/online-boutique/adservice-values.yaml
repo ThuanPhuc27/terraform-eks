@@ -22,6 +22,7 @@ deployments:
       timeoutSeconds: 3
 env:
   PORT: 9555
+port: 9555
 resources:
   requests:
     cpu: "100m"

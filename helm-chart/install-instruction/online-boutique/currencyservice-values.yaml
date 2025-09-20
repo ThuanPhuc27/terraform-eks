@@ -17,6 +17,7 @@ deployments:
       periodSeconds: 10
       failureThreshold: 5
       timeoutSeconds: 3
+port: 7000
 env:
   PORT: 7000
 resources:

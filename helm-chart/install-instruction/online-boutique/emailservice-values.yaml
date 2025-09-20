@@ -19,6 +19,7 @@ deployments:
       timeoutSeconds: 3
 env:
   PORT: 5000
+port: 5000
 resources:
   requests:
     cpu: "100m"

@@ -15,10 +15,11 @@ deployments:
       # readinessCMD: ["/bin/grpc_health_probe", "-addr=:5050"]
       livenessPort: 5050
       readinessPort: 5050
-      initialDelaySeconds: 200
+      initialDelaySeconds: 100
       periodSeconds: 10
       failureThreshold: 5
       timeoutSeconds: 3
+port: 5050
 env:
   PORT: 5050
   PRODUCT_CATALOG_SERVICE_ADDR: productcatalogservice:3550

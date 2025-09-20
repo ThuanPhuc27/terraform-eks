@@ -20,6 +20,7 @@ deployments:
 env:
   PORT: 8088
   PRODUCT_CATALOG_SERVICE_ADDR: productcatalogservice:3550
+port: 8088
 resources:
   requests:
     cpu: "100m"

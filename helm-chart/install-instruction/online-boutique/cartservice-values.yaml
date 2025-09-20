@@ -21,6 +21,7 @@ deployments:
 env:
   PORT: 7070
   REDIS_ADDR: redis:6379
+port: 7070
 resources:
   requests:
     cpu: "200m"
