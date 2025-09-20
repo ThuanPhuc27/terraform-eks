@@ -19,7 +19,7 @@ deployments:
       timeoutSeconds: 3
 env:
   PORT: 8088
-  PRODUCT_CATALOG_SERVICE_ADDR: productcatalogservice:3550
+  PRODUCT_CATALOG_SERVICE_ADDR: productcatalogservice:80
 port: 8088
 resources:
   requests:

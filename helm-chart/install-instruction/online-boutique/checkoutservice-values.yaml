@@ -22,12 +22,12 @@ deployments:
 port: 5050
 env:
   PORT: 5050
-  PRODUCT_CATALOG_SERVICE_ADDR: productcatalogservice:3550
-  SHIPPING_SERVICE_ADDR: shippingservice:50051
-  PAYMENT_SERVICE_ADDR: paymentservice:50050
-  EMAIL_SERVICE_ADDR: emailservice:5000
-  CURRENCY_SERVICE_ADDR: currencyservice:7000
-  CART_SERVICE_ADDR: cartservice:7070
+  PRODUCT_CATALOG_SERVICE_ADDR: productcatalogservice:80
+  SHIPPING_SERVICE_ADDR: shippingservice:80
+  PAYMENT_SERVICE_ADDR: paymentservice:80
+  EMAIL_SERVICE_ADDR: emailservice:80
+  CURRENCY_SERVICE_ADDR: currencyservice:80
+  CART_SERVICE_ADDR: cartservice:80
 resources:
   requests:
     cpu: "200m"
