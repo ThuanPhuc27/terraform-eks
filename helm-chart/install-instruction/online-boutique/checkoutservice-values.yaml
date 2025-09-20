@@ -1,0 +1,36 @@
+image:
+  repository: 418295694191.dkr.ecr.ap-southeast-1.amazonaws.com/checkoutservice
+  tag: latest
+imagePullSecrets:
+- name: ecr-credentials
+deployments:
+- name: checkoutservice
+  replicasCount: 1
+  prometheusEnabled: false
+  service:
+    name: checkoutservice
+    HTTPPort: 5050
+    health:
+      livenessPort: 5050
+      readinessPort: 5050
+      initialDelaySeconds: 100
+      periodSeconds: 10
+      failureThreshold: 5
+      timeoutSeconds: 3
+env:
+  PORT: 5050
+  PRODUCT_CATALOG_SERVICE_ADDR: productcatalogservice:3550
+  SHIPPING_SERVICE_ADDR: shippingservice:50051
+  PAYMENT_SERVICE_ADDR: paymentservice:50050
+  EMAIL_SERVICE_ADDR: emailservice:5000
+  CURRENCY_SERVICE_ADDR: currencyservice:7000
+  CART_SERVICE_ADDR: cartservice:7070
+resources:
+  requests:
+    cpu: "200m"
+    memory: "100Mi"
+  limits:
+    cpu: "200m"
+    memory: "100Mi"
+infisical:
+  enabled: false

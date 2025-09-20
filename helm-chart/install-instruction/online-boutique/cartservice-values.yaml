@@ -1,31 +1,32 @@
 image:
-  repository: 418295694191.dkr.ecr.ap-southeast-1.amazonaws.com/adservice
+  repository: 418295694191.dkr.ecr.ap-southeast-1.amazonaws.com/cartservice
   tag: latest
 imagePullSecrets:
 - name: ecr-credentials
 deployments:
-- name: adservice
+- name: cartservice
   replicasCount: 1
   prometheusEnabled: false
   service:
-    name: adservice
-    HTTPPort: 9555
+    name: cartservice
+    HTTPPort: 7070
     healthType: grpc
     health:
-      livenessPort: 9555
-      readinessPort: 9555
+      livenessPort: 7070
+      readinessPort: 7070
       initialDelaySeconds: 100
       periodSeconds: 10
       failureThreshold: 5
       timeoutSeconds: 3
 env:
-  PORT: 9555
+  PORT: 7070
+  REDIS_ADDR: redis:6379
 resources:
   requests:
-    cpu: "100m"
+    cpu: "200m"
     memory: "100Mi"
   limits:
-    cpu: "100m"
+    cpu: "200m"
     memory: "100Mi"
 infisical:
   enabled: false

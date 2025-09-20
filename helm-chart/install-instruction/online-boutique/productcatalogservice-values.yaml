@@ -1,25 +1,24 @@
 image:
-  repository: 418295694191.dkr.ecr.ap-southeast-1.amazonaws.com/adservice
+  repository: 418295694191.dkr.ecr.ap-southeast-1.amazonaws.com/productcatalogservice
   tag: latest
 imagePullSecrets:
 - name: ecr-credentials
 deployments:
-- name: adservice
+- name: productcatalogservice
   replicasCount: 1
   prometheusEnabled: false
   service:
-    name: adservice
-    HTTPPort: 9555
-    healthType: grpc
+    name: productcatalogservice
+    HTTPPort: 3550
     health:
-      livenessPort: 9555
-      readinessPort: 9555
+      livenessPort: 3550
+      readinessPort: 3550
       initialDelaySeconds: 100
       periodSeconds: 10
       failureThreshold: 5
       timeoutSeconds: 3
 env:
-  PORT: 9555
+  PORT: 3550
 resources:
   requests:
     cpu: "100m"

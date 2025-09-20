@@ -7,21 +7,36 @@ spec:
   generators:
     - list:
         elements:
-          - name: admin-server
+          - name: adservice
+          - name: cartservice
+          - name: checkoutservice
+          - name: currencyservice
+          - name: emailservice
+          - name: frontend
+          - name: paymentservice
+          - name: productcatalogservice
+          - name: recommendationservice
+          - name: shippingservice
   template:
     metadata:
       name: '{{name}}'
       namespace: argocd
+      annotations:
+        argocd-image-updater.argoproj.io/app.helm.image-name: image.name
+        argocd-image-updater.argoproj.io/app.helm.image-tag: image.tag
+        argocd-image-updater.argoproj.io/app.update-strategy: latest
+        argocd-image-updater.argoproj.io/app.pull-secret: pullsecret:argocd/ecr-credentials
     spec:
       project: online-boutique-dev
       source:
-        repoURL: https://github.com/ThuanPhuc27/terraform-eks
+        repoURL: https://github.com/ThuanPhuc27/terraform-eks.git
         targetRevision: main
         path: helm-chart/helm-general
         helm:
           valueFiles:
-            - ../install-instruction/online-boutique/adservice-values.yaml
+            - ../install-instruction/online-boutique/{{name}}-values.yaml
       destination:
+        name: "shoeshop-dev"
         namespace: online-boutique
       syncPolicy:
         automated:

@@ -49,6 +49,7 @@ kubectl create secret docker-registry ecr-credentials \
 
 kubectl create secret docker-registry ecr-credentials --docker-server=418295694191.dkr.ecr.ap-southeast-1.amazonaws.com --docker-username=AWS --docker-password=$(aws ecr get-login-password --region ap-southeast-1) --namespace=online-boutique
 
+kubectl create secret docker-registry ecr-credentials --docker-server=418295694191.dkr.ecr.ap-southeast-1.amazonaws.com --docker-username=AWS --docker-password=$(aws ecr get-login-password --region ap-southeast-1) --namespace=argocd
 
 =============== argocd
 

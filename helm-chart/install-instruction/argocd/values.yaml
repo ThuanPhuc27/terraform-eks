@@ -18,3 +18,8 @@ dex:
     tag: 2.43.1-debian-12-r8
 server:
   insecure: true
+applicationSet:
+  enabled: true
+  serviceAccount:
+    automountServiceAccountToken: true
+    clusterAdminAccess: true

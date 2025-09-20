@@ -1,31 +1,30 @@
 image:
-  repository: 418295694191.dkr.ecr.ap-southeast-1.amazonaws.com/adservice
+  repository: 418295694191.dkr.ecr.ap-southeast-1.amazonaws.com/currencyservice
   tag: latest
 imagePullSecrets:
 - name: ecr-credentials
 deployments:
-- name: adservice
+- name: currencyservice
   replicasCount: 1
   prometheusEnabled: false
   service:
-    name: adservice
-    HTTPPort: 9555
-    healthType: grpc
+    name: currencyservice
+    HTTPPort: 7000
     health:
-      livenessPort: 9555
-      readinessPort: 9555
+      livenessPort: 7000
+      readinessPort: 7000
       initialDelaySeconds: 100
       periodSeconds: 10
       failureThreshold: 5
       timeoutSeconds: 3
 env:
-  PORT: 9555
+  PORT: 7000
 resources:
   requests:
-    cpu: "100m"
+    cpu: "200m"
     memory: "100Mi"
   limits:
-    cpu: "100m"
+    cpu: "200m"
     memory: "100Mi"
 infisical:
   enabled: false

@@ -14,3 +14,5 @@ helm install --values ./install-instruction/argocd/values.yaml argocd ./argo-cd 
 argo-ingress.yml
 
 kubectl apply -f ./install-instruction/argocd/ingress.yml
+
+helm upgrade -f ./install-instruction/argocd/values.yaml argocd ./argo-cd --namespace argocd

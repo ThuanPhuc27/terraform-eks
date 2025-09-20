@@ -1,31 +1,30 @@
 image:
-  repository: 418295694191.dkr.ecr.ap-southeast-1.amazonaws.com/adservice
+  repository: 418295694191.dkr.ecr.ap-southeast-1.amazonaws.com/paymentservice
   tag: latest
 imagePullSecrets:
 - name: ecr-credentials
 deployments:
-- name: adservice
+- name: paymentservice
   replicasCount: 1
   prometheusEnabled: false
   service:
-    name: adservice
-    HTTPPort: 9555
-    healthType: grpc
+    name: paymentservice
+    HTTPPort: 50050
     health:
-      livenessPort: 9555
-      readinessPort: 9555
+      livenessPort: 50050
+      readinessPort: 50050
       initialDelaySeconds: 100
       periodSeconds: 10
       failureThreshold: 5
       timeoutSeconds: 3
 env:
-  PORT: 9555
+  PORT: 50050
 resources:
   requests:
     cpu: "100m"
     memory: "100Mi"
   limits:
     cpu: "100m"
-    memory: "100Mi"
+    memory: "10Mi"
 infisical:
   enabled: false
