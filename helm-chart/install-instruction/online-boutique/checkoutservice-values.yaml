@@ -11,9 +11,11 @@ deployments:
     name: checkoutservice
     HTTPPort: 5050
     health:
+      # livenessCMD: ["/bin/grpc_health_probe", "-addr=:5050"]
+      # readinessCMD: ["/bin/grpc_health_probe", "-addr=:5050"]
       livenessPort: 5050
       readinessPort: 5050
-      initialDelaySeconds: 100
+      initialDelaySeconds: 200
       periodSeconds: 10
       failureThreshold: 5
       timeoutSeconds: 3

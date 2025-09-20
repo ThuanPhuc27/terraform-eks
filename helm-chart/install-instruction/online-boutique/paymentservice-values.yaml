@@ -25,6 +25,6 @@ resources:
     memory: "100Mi"
   limits:
     cpu: "100m"
-    memory: "10Mi"
+    memory: "100Mi"
 infisical:
   enabled: false

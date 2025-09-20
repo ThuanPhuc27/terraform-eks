@@ -34,6 +34,7 @@ module "eks" {
   node_security_group_tags = {
     "karpenter.sh/discovery" = "${var.project}-${var.environment}"
   }
+  
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 

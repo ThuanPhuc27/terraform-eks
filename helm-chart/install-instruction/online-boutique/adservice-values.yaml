@@ -12,6 +12,8 @@ deployments:
     HTTPPort: 9555
     healthType: grpc
     health:
+      #livenessCMD: ["/bin/grpc_health_probe", "-addr=:9555"]
+      #readinessCMD: ["/bin/grpc_health_probe", "-addr=:9555"]
       livenessPort: 9555
       readinessPort: 9555
       initialDelaySeconds: 100

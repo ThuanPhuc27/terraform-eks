@@ -109,6 +109,12 @@ resource "kubectl_manifest" "karpenter_node_class" {
             karpenter.sh/discovery: ${module.eks.cluster_name}
       tags:
         karpenter.sh/discovery: ${module.eks.cluster_name}
+      userData: |
+        #!/bin/bash
+        dnf install -y docker
+        systemctl enable docker
+        systemctl start docker
+
   YAML
 
   depends_on = [
