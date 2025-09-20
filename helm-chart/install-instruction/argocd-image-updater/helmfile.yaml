@@ -1,0 +1,11 @@
+repositories:
+  - name: argocd
+    url: https://argoproj.github.io/argo-helm
+
+releases:
+  - name: argocd-image-updater
+    namespace: argocd
+    chart: argocd/argocd-image-updater
+    version: 0.12.3
+    values:
+      - values.yaml

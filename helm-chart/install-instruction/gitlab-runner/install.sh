@@ -6,6 +6,18 @@
 
 kubectl create namespace gitlab-runner 
 
-cd helm-chart
+# cd helm-chart
 
-helm install --values ./install-instruction/gitlab-runner/values.yaml gitlab-runner ./gitlab-runner  --namespace gitlab-runner 
+# helm install --values ./install-instruction/gitlab-runner/values.yaml gitlab-runner ./gitlab-runner  --namespace gitlab-runner 
+
+cd helm-chart\install-instruction\gitlab-runner
+
+helmfile lint
+
+helmfile diff
+
+helmfile sync
+
+helmfile apply
+
+helmfile destroy
