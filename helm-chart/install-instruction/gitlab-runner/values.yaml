@@ -1,0 +1,8 @@
+runnerToken: "glrt-pM_i-Z_KWw0l6VbniMlGOGc6MXd4Y3FsCm86MQp0OjIKdTpka2dlZhg.01.1j09qj9sd"
+gitlabUrl: https://gitlab.com/
+runners:
+  privileged: true
+rbac:
+  create: true
+serviceAccount:
+  create: true

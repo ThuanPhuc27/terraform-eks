@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: online-boutique-dev
+  namespace: argocd
+spec:
+  description: Project for online-boutique
+
+  destinations:
+    - namespace: '*'
+      server: 'https://08A5FFE0DBFF3676F5EEF9030D145F0E.gr7.ap-southeast-1.eks.amazonaws.com'
+
+  sourceRepos:
+    - 'https://github.com/ThuanPhuc27/*'
+
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  namespaceResourceWhitelist:
+    - group: '*'
+      kind: '*'

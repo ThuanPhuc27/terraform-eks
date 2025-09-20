@@ -16,3 +16,5 @@ dex:
     registry: docker.io
     repository: bitnamilegacy/dex
     tag: 2.43.1-debian-12-r8
+server:
+  insecure: true

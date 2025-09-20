@@ -8,7 +8,7 @@ terraform {
 
 locals {
   environment = "dev"
-  project     = "shoeshop"
+  project     = "cluster"
 }
 
 inputs = {
