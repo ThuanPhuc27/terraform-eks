@@ -8,10 +8,10 @@ spec:
 
   destinations:
     - namespace: '*'
-      server: 'https://08A5FFE0DBFF3676F5EEF9030D145F0E.gr7.ap-southeast-1.eks.amazonaws.com'
+      server: 'https://kubernetes.default.svc'
 
   sourceRepos:
-    - 'https://github.com/ThuanPhuc27/*'
+    - 'https://gitlab.com/thesis7100538/online_boutique/*'
 
   clusterResourceWhitelist:
     - group: '*'

@@ -1,4 +1,4 @@
-================== karpenter
+================== karpenter 
 
 kubectl logs -f deployment/karpenter -n kube-system
 
@@ -10,7 +10,9 @@ aws eks update-kubeconfig --region ap-southeast-1 --name tool-cluster-dev
 
 aws eks update-kubeconfig --region ap-southeast-1 --name shoeshop-cluster-dev
 
+aws secretsmanager delete-secret --secret-id tool-cluster-dev-general-secret --force-delete-without-recovery
 
+aws configure
 
 ================ vpc-cni 
 
@@ -22,7 +24,7 @@ kubectl set env ds aws-node -n kube-system WARM_IP_TARGET=5
 
 kubectl set env ds aws-node -n kube-system MINIMUM_IP_TARGET=5
 
-================ ebs-csi
+================ ebs-csi 
 
 kubectl logs -f deployment/ebs-csi-controller -n kube-system
 
@@ -37,7 +39,7 @@ parameters:
   encrypted: "true"
 allowVolumeExpansion: true
 
-================= ECR
+================= ECR 
 
 aws ecr get-login-password --region ap-southeast-1
 
@@ -51,7 +53,7 @@ kubectl create secret docker-registry ecr-credentials --docker-server=4182956941
 
 kubectl create secret docker-registry ecr-credentials --docker-server=418295694191.dkr.ecr.ap-southeast-1.amazonaws.com --docker-username=AWS --docker-password=$(aws ecr get-login-password --region ap-southeast-1) --namespace=argocd
 
-=============== argocd
+=============== argocd 
 
 kubectl -n argocd get secret argocd-secret -o jsonpath="{.data.clearPassword}" | base64 -d
 
