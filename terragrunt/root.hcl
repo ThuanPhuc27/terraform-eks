@@ -1,6 +1,6 @@
 locals {
   region      = "ap-southeast-1" 
-  bucket      = "terraform-state-03092025"
+  bucket      = "terraform-state-20092025"
 }
 
 # Configure remote state

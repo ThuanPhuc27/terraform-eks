@@ -72,7 +72,7 @@ resource "kubectl_manifest" "karpenter_node_pool" {
             values: ["spot", "on-demand"]
           - key: node.kubernetes.io/instance-type
             operator: In
-            values: ["t3.medium"]
+            values: ["m7i-flex.large"]
   YAML
 
   depends_on = [

@@ -13,7 +13,7 @@ module "eks" {
       name                     = "${var.project}-${var.environment}-addon"
       use_name_prefix          = false
       ami_type       = "AL2023_x86_64_STANDARD"
-      instance_types = ["t3.medium"]
+      instance_types = ["m7i-flex.large"]
       min_size       = 1
       max_size       = 5
       desired_size   = 2
