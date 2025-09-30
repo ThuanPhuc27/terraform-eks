@@ -30,7 +30,15 @@ resource "kubectl_manifest" "aws-secret-provider" {
     metadata:
       name: csi-secrets-store-provider-aws
       namespace: kube-system
-    ---
+  YAML
+
+  depends_on = [
+    helm_release.secrets-store-csi-driver
+  ]
+}
+
+resource "kubectl_manifest" "aws-secret-provider-clusterole" {
+  yaml_body = <<-YAML
     apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRole
     metadata:
@@ -48,20 +56,15 @@ resource "kubectl_manifest" "aws-secret-provider" {
       - apiGroups: [""]
         resources: ["nodes"]
         verbs: ["get"]
-    ---
-    apiVersion: rbac.authorization.k8s.io/v1
-    kind: ClusterRoleBinding
-    metadata:
-      name: csi-secrets-store-provider-aws-cluster-rolebinding
-    roleRef:
-      apiGroup: rbac.authorization.k8s.io
-      kind: ClusterRole
-      name: csi-secrets-store-provider-aws-cluster-role
-    subjects:
-      - kind: ServiceAccount
-        name: csi-secrets-store-provider-aws
-        namespace: kube-system
-    ---
+  YAML
+
+  depends_on = [
+    helm_release.secrets-store-csi-driver
+  ]
+}
+
+resource "kubectl_manifest" "aws-secret-provider-daemonset" {
+  yaml_body = <<-YAML
     apiVersion: apps/v1
     kind: DaemonSet
     metadata:
@@ -121,6 +124,27 @@ resource "kubectl_manifest" "aws-secret-provider" {
   ]
 }
 
+resource "kubectl_manifest" "aws-secret-provider-clusterolebinding" {
+  yaml_body = <<-YAML
+    apiVersion: rbac.authorization.k8s.io/v1
+    kind: ClusterRoleBinding
+    metadata:
+      name: csi-secrets-store-provider-aws-cluster-rolebinding
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: csi-secrets-store-provider-aws-cluster-role
+    subjects:
+      - kind: ServiceAccount
+        name: csi-secrets-store-provider-aws
+        namespace: kube-system
+  YAML
+
+  depends_on = [
+    helm_release.secrets-store-csi-driver
+  ]
+}
+
 # Trusted entities
 data "aws_iam_policy_document" "secrets_csi_assume_role_policy" {
   statement {
@@ -130,7 +154,7 @@ data "aws_iam_policy_document" "secrets_csi_assume_role_policy" {
     condition {
       test     = "StringEquals"
       variable = "${module.eks.oidc_provider}:sub"
-      values   = ["system:serviceaccount:kube-system:secrets_csi_sa"]
+      values   = ["system:serviceaccount:*:*"]
     }
 
     condition {
