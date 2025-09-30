@@ -1,0 +1,6 @@
+global:
+  defaultStorageClass: "gp3-waitforfirstcustomer"
+sonarqubeUsername: huy
+sonarqubePassword: "dfgfddddgfdsgdtgwer532"
+service:
+  type: ClusterIP
