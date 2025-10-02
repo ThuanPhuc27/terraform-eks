@@ -93,7 +93,7 @@ resource "kubectl_manifest" "karpenter_node_class" {
       blockDeviceMappings:
         - deviceName: /dev/xvda
           ebs:
-            volumeSize: 30Gi
+            volumeSize: 80Gi
             volumeType: gp3
       metadataOptions:
         httpEndpoint: enabled

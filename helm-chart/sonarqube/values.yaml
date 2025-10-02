@@ -1,0 +1,25 @@
+global:
+  defaultStorageClass: "gp3-waitforfirstcustomer"
+sysctl:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: bitnamilegacy/os-shell
+    tag: 12-debian-12-r51
+resourcesPreset: "medium"
+service:
+  type: ClusterIP
+image:
+  registry: docker.io
+  repository: bitnamilegacy/sonarqube
+  tag: 25.8.0-debian-12-r2
+postgresql:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: bitnamilegacy/postgresql
+    tag: 17.6.0-debian-12-r4
+  auth:
+    password: "12394ni357834aA@"
+    username: bn_sonarqube
+    database: bitnami_sonarqube

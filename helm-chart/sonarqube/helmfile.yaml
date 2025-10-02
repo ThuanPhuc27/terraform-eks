@@ -6,5 +6,6 @@ releases:
   - name: sonarqube
     namespace: sonarqube
     chart: bitnami/sonarqube
+    version: 8.1.17
     values:
       - values.yaml
