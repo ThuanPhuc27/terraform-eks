@@ -16,7 +16,7 @@ module "eks" {
       instance_types = ["m7i-flex.large"]
       min_size       = 1
       max_size       = 5
-      desired_size   = 2
+      desired_size   = 1
       iam_role_additional_policies = {
         "ssm" : "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
       }

@@ -30,6 +30,7 @@ spec:
         argocd-image-updater.argoproj.io/app.update-strategy: latest
         argocd-image-updater.argoproj.io/image-list: app=418295694191.dkr.ecr.ap-southeast-1.amazonaws.com/{{name}}:$TAG
         argocd-image-updater.argoproj.io/app.pull-secret: pullsecret:argocd/ecr-credentials
+        argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
     spec:
       project: online-boutique-dev
       source:

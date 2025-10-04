@@ -63,6 +63,10 @@ kubectl -n argocd get secret argocd-secret -o jsonpath="{.data.clearPassword}" |
 
 kubectl -n argocd get secret argocd-secret -o jsonpath="{.data.clearPassword}" | % { [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($_)) }
 
+argocd login localhost:52367 --username admin --password YtTDooQrB8
+
+kubectl -n argocd create secret generic git-credentials --from-literal=sshPrivateKey="$(cat ~/.ssh/id_rsa)"
+
 ====================== secret csi
 # Cài đặt CRDs cho Volume Snapshots
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
