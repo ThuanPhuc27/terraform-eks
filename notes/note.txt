@@ -16,6 +16,8 @@ aws configure
 
 {"REDIS_ADDR":"redis-master.redis.svc.cluster.local:6379","PRODUCT_CATALOG_SERVICE_ADDR":"productcatalogservice.online-boutique.svc.cluster.local:80","SHIPPING_SERVICE_ADDR":"shippingservice.online-boutique.svc.cluster.local:80","PAYMENT_SERVICE_ADDR":"paymentservice.online-boutique.svc.cluster.local:80","EMAIL_SERVICE_ADDR":"emailservice.online-boutique.svc.cluster.local:80","CURRENCY_SERVICE_ADDR":"currencyservice.online-boutique.svc.cluster.local:80","CART_SERVICE_ADDR":"cartservice.online-boutique.svc.cluster.local:80","DISABLE_PROFILER":"1","AD_SERVICE_ADDR":"adservice.online-boutique.svc.cluster.local:80","RECOMMENDATION_SERVICE_ADDR":"recommendationservice.online-boutique.svc.cluster.local:80","CHECKOUT_SERVICE_ADDR":"checkoutservice.online-boutique.svc.cluster.local:80"}
 
+aws eks describe-cluster --name tool-cluster-dev --region ap-southeast-1 --query "cluster.identity.oidc.issuer" --output text
+
 ================ vpc-cni 
 
 kubectl set env daemonset aws-node -n kube-system ENABLE_PREFIX_DELEGATION=true
@@ -72,3 +74,4 @@ kubectl -n argocd create secret generic git-credentials --from-literal=sshPrivat
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotclasses.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
+

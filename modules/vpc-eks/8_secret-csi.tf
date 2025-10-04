@@ -152,7 +152,7 @@ data "aws_iam_policy_document" "secrets_csi_assume_role_policy" {
     effect  = "Allow"
 
     condition {
-      test     = "StringEquals"
+      test     = "StringLike"
       variable = "${module.eks.oidc_provider}:sub"
       values   = ["system:serviceaccount:*:*"]
     }
