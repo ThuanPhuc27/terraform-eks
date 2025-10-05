@@ -59,6 +59,8 @@ kubectl create secret docker-registry ecr-credentials --docker-server=4182956941
 
 kubectl create secret docker-registry ecr-credentials --docker-server=418295694191.dkr.ecr.ap-southeast-1.amazonaws.com --docker-username=AWS --docker-password=$(aws ecr get-login-password --region ap-southeast-1) --namespace=argocd
 
+
+
 =============== argocd 
 
 kubectl -n argocd get secret argocd-secret -o jsonpath="{.data.clearPassword}" | base64 -d
