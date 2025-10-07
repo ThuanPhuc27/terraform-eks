@@ -1,25 +1,131 @@
+# ===== Global =====
 global:
-  defaultStorageClass: "gp3-waitforfirstcustomer"
+  # Dùng ECR Public cho TẤT CẢ images (cả subchart)
+  imageRegistry: public.ecr.aws
+
+  # StorageClass mặc định trong cluster (bạn đã tạo): 
+  defaultStorageClass: gp3-waitforfirstcustomer
+
+  # Cho phép dùng image “không chuẩn” (do chuyển registry sang ECR Public)
+  security:
+    allowInsecureImages: true
+
+  # Stub bắt buộc khi đã có block global.* (tránh lỗi nil pointer)
+  postgresql:
+    auth:
+      username: sonar
+      database: sonarqube
+
+# ===== SonarQube Image =====
+image:
+  repository: bitnami/sonarqube
+  tag: "25.8.0-debian-12-r2"
+  pullPolicy: IfNotPresent
+  # (pullSecrets không cần vì ECR Public là public)
+
+# ===== SonarQube cấu hình cơ bản =====
+sonarqubeUsername: user
+sonarqubePassword: "111111aA@huy"
+minHeapSize: 1024m
+maxHeapSize: 2048m
+jvmOpts: "-XX:+UseG1GC"
+
+# ===== Service/Ingress =====
+service:
+  type: ClusterIP
+  ports:
+    http: 9000
+    elastic: 9001
+
+ingress:
+  enabled: false
+
+# ===== NetworkPolicy (giữ egress ra Internet để kéo image) =====
+networkPolicy:
+  enabled: true
+  allowExternal: true
+  allowExternalEgress: true
+
+# ===== Persistence cho SonarQube (dữ liệu app) =====
+persistence:
+  enabled: true
+  storageClass: gp3-waitforfirstcustomer
+  accessModes:
+    - ReadWriteOnce
+  size: 20Gi
+
+# ===== PostgreSQL subchart =====
+postgresql:
+  enabled: true
+  auth:
+    # username/database đã map ở global.postgresql.auth; vẫn set tường minh ở đây cho chắc
+    username: sonar
+    database: sonarqube
+    # password để rỗng => chart sẽ tự sinh Secret; 
+    # nếu bạn muốn tự quản, hãy dùng existingSecret thay vì để plain text
+    password: ""
+  # Override image Postgres sang ECR Public để tránh Docker Hub
+  image:
+    registry: public.ecr.aws
+    repository: bitnami/postgresql
+    tag: "17.6.0-debian-12-r0"
+    pullPolicy: IfNotPresent
+  primary:
+    persistence:
+      enabled: true
+      storageClass: gp3-waitforfirstcustomer
+      accessMode: ReadWriteOnce
+      size: 10Gi
+
+# ===== Tài nguyên (đặt tay, bỏ preset) =====
+resourcesPreset: "none"
+resources:
+  requests:
+    cpu: "500m"
+    memory: "1Gi"
+  limits:
+    cpu: "2"
+    memory: "4Gi"
+
+# ===== Helper images cũng chuyển sang ECR Public (tránh Docker Hub rate-limit) =====
 sysctl:
   enabled: true
   image:
-    registry: docker.io
-    repository: bitnamilegacy/os-shell
+    registry: public.ecr.aws
+    repository: bitnami/os-shell
     tag: 12-debian-12-r51
-resourcesPreset: "medium"
-service:
-  type: ClusterIP
-image:
-  registry: docker.io
-  repository: bitnamilegacy/sonarqube
-  tag: 25.8.0-debian-12-r2
-postgresql:
-  enabled: true
+    pullPolicy: IfNotPresent
+
+volumePermissions:
+  enabled: false
   image:
-    registry: docker.io
-    repository: bitnamilegacy/postgresql
-    tag: 17.6.0-debian-12-r4
-  auth:
-    password: "12394ni357834aA@"
-    username: bn_sonarqube
-    database: bitnami_sonarqube
+    registry: public.ecr.aws
+    repository: bitnami/os-shell
+    tag: 12-debian-12-r51
+    pullPolicy: IfNotPresent
+
+caCerts:
+  enabled: false
+  image:
+    registry: public.ecr.aws
+    repository: bitnami/os-shell
+    tag: 12-debian-12-r51
+    pullPolicy: IfNotPresent
+
+plugins:
+  install: []
+  noCheckCertificate: true
+  image:
+    registry: public.ecr.aws
+    repository: bitnami/os-shell
+    tag: 12-debian-12-r51
+    pullPolicy: IfNotPresent
+
+metrics:
+  jmx:
+    enabled: false
+    image:
+      registry: public.ecr.aws
+      repository: bitnami/jmx-exporter
+      tag: 1.4.0-debian-12-r0
+      pullPolicy: IfNotPresent

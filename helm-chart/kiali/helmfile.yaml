@@ -1,0 +1,10 @@
+repositories:
+  - name: kiali
+    url: https://kiali.org/helm-charts
+releases:
+  - name: kiali
+    namespace: monitoring
+    chart: kiali/kiali-server
+    version: 2.16.0
+    values:
+      - values.yaml

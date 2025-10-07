@@ -1,0 +1,11 @@
+global:
+  defaultStorageClass: "gp3-waitforfirstcustomer"
+image:
+  registry: docker.io
+  repository: bitnamilegacy/grafana-loki
+  tag: 3.5.3-debian-12-r2
+serviceAccount:
+  create: true
+  name: "loki-sa"
+  annotations: 
+    "eks.amazonaws.com/role-arn": "arn:aws:iam::043902793725:role/tool-cluster-dev-secrets-csi-role"

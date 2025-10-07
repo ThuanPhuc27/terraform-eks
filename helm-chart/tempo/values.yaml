@@ -1,0 +1,15 @@
+global:
+  defaultStorageClass: "gp3-waitforfirstcustomer"
+tempo:
+  image:
+    registry: docker.io
+    repository: bitnamilegacy/grafana-tempo
+    tag: 2.8.2-debian-12-r1
+vulture:
+  enabled: true
+  image:
+    registry: docker.io
+    repository: bitnamilegacy/grafana-tempo-vulture
+    tag: 2.8.2-debian-12-r1
+queryFrontend:
+  query: enabled

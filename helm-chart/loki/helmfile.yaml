@@ -1,0 +1,10 @@
+repositories:
+  - name: bitnami2
+    url: https://charts.bitnami.com/bitnami
+
+releases:
+  - name: loki
+    namespace: monitoring
+    chart: bitnami/grafana-loki
+    values:
+      - values.yaml

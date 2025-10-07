@@ -77,3 +77,36 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snaps
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshotcontents.yaml
 kubectl apply -f https://raw.githubusercontent.com/kubernetes-csi/external-snapshotter/master/client/config/crd/snapshot.storage.k8s.io_volumesnapshots.yaml
 
+============================ loki
+aws s3api create-bucket --bucket loki-tools-cluster-chunks --region ap-southeast-1 --create-bucket-configuration LocationConstraint=ap-southeast-1
+
+aws s3api create-bucket --bucket loki-tools-cluster-ruler --region ap-southeast-1 --create-bucket-configuration LocationConstraint=ap-southeast-1
+
+
+cat << EOF | envsubst > loki-policy.json
+{
+    {
+        "Version": "2012-10-17",
+        "Statement": [
+            {
+                "Effect": "Allow",
+                "Action": [
+                    "s3:ListBucket",
+                    "s3:GetObject",
+                    "s3:PutObject",
+                    "s3:DeleteObject"
+                ],
+                "Resource": [
+                    "arn:aws:s3:::loki-06-10-2025",
+                    "arn:aws:s3:::loki-06-10-2025/*"
+                ]
+            }
+        ]
+    }
+}
+
+aws iam create-policy --policy-name LokiS3Access --policy-document file://loki-policy.json
+
+export POLICY_ARN=$(aws iam list-policies --query "Policies[?PolicyName=='loki_bucket_policy'].Arn" --output text)
+
+aws eks describe-cluster --name tool-cluster-dev --query "cluster.identity.oidc.issuer" --output text

@@ -8,4 +8,11 @@ releases:
     chart: bitnami/sonarqube
     version: 8.1.17
     values:
-      - values.yaml
+      - values.yaml                 
+      - global:
+          security:
+            allowInsecureImages: true   
+          postgresql:                
+            auth:
+              username: sonar
+              database: sonarqube
