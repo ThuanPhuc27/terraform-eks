@@ -11,11 +11,12 @@ spec:
       server: 'https://kubernetes.default.svc'
 
   sourceRepos:
-    - 'https://gitlab.com/thesis7100538/online_boutique/*'
-
+    - '*'
   clusterResourceWhitelist:
     - group: '*'
       kind: '*'
   namespaceResourceWhitelist:
     - group: '*'
       kind: '*'
+  orphanedResources:
+    warn: true

@@ -1,26 +1,46 @@
+affinity: {}
+authScripts:
+  enabled: false
+  scripts: {}
 config:
-  registries:
-    - name: ECR
-      api_url: https://043902793725.dkr.ecr.ap-southeast-1.amazonaws.com
-      prefix: "043902793725.dkr.ecr.ap-southeast-1.amazonaws.com"
-      ping: yes
-      default: true
-      insecure: false
-      credentials: ext:/scripts/ecr-login.sh    
-      credsexpire: 12h
+  applicationsAPIKind: ""
   argocd:
     grpcWeb: true
-    serverAddress: "argocd-argo-cd-server.argocd.svc.cluster.local"
-
-authScripts:
+    insecure: false
+    plaintext: false
+    serverAddress: ""
+    token: ""
+  disableKubeEvents: false
+  gitCommitMail: ""
+  gitCommitTemplate: ""
+  gitCommitUser: ""
+  logLevel: trace
+  registries:
+  - api_url: https://043902793725.dkr.ecr.ap-southeast-1.amazonaws.com
+    credentials: pullsecret:argocd/ecr-credentials
+    defaultns: library
+    name: Docker Hub
+    ping: true
+extraArgs:
+- --registries-conf-path
+- /app/config/registries.conf
+image:
+  pullPolicy: Always
+  repository: quay.io/argoprojlabs/argocd-image-updater
+  tag: v0.13.1
+rbac:
   enabled: true
-  scripts:
-    ecr-login.sh: |
-      #!/bin/sh
-      aws ecr --region "ap-southeast-1" get-authorization-token --output text --query 'authorizationData[].authorizationToken' | base64 -d
+replicaCount: 1
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  seccompProfile:
+    type: RuntimeDefault
 serviceAccount:
   create: true
-  annotations: 
-    eks.amazonaws.com/role-arn: "arn:aws:iam::043902793725:role/ECRAccessRole"
-  labels: {}
-  name: "argocd-image-updater"
+updateStrategy:
+  type: Recreate

@@ -4,6 +4,9 @@ metadata:
   name: online-boutique-dev
   namespace: argocd
 spec:
+  ignoreApplicationDifferences:
+    - jqPathExpressions:
+      - .spec.source.helm.parameters
   generators:
     - list:
         elements:
@@ -22,15 +25,13 @@ spec:
       name: '{{name}}'
       namespace: argocd
       annotations:
-        argocd-image-updater.argoproj.io/app.allow-tags: regexp:^[0-9a-f]{7}-dev$
-        argocd-image-updater.argoproj.io/app.ignore-tags: latest,regexp:^latest.*$,regexp:^[0-9a-f]{7}-(prod|stage)
-        argocd-image-updater.argoproj.io/app.update-strategy: latest
+        argocd-image-updater.argoproj.io/app.allow-tags: regexp:^[0-9a-f]{8}-dev$
+        argocd-image-updater.argoproj.io/app.ignore-tags: latest,regexp:^latest.*$,regexp:^[0-9a-f]{8}-(prod|stage)
+        argocd-image-updater.argoproj.io/app.update-strategy: newest-build
         argocd-image-updater.argoproj.io/app.helm.image-name: image.name
         argocd-image-updater.argoproj.io/app.helm.image-tag: image.tag
-        argocd-image-updater.argoproj.io/app.update-strategy: latest
-        argocd-image-updater.argoproj.io/image-list: app=418295694191.dkr.ecr.ap-southeast-1.amazonaws.com/{{name}}:$TAG
+        argocd-image-updater.argoproj.io/image-list: app=043902793725.dkr.ecr.ap-southeast-1.amazonaws.com/{{name}}
         argocd-image-updater.argoproj.io/app.pull-secret: pullsecret:argocd/ecr-credentials
-        argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
     spec:
       project: online-boutique-dev
       source:
@@ -51,3 +52,4 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - PruneLast=true
+          - ApplyOutOfSyncOnly=true
